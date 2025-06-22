@@ -16,6 +16,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    SidebarComponent,
+    HeaderComponent
   ]
 })
 export class DashboardModule { }
