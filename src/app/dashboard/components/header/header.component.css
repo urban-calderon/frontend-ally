@@ -1,0 +1,39 @@
+.main-header {
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.title-dashboard {
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.user-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.user-name {
+  color: var(--primary)
+}
+
+button {
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  align-items: center;
+  display: flex;
+}
