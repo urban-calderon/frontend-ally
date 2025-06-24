@@ -1,1 +1,107 @@
-<p>register works!</p>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <span>Crear cuenta</span>
+    </div>
+    <div class="card-body">
+      <form class="form" (ngSubmit)="sendData()">
+        <div>
+          <label>Nombre</label>
+          <div
+            class="inputForm"
+            [class.error]="nameControl.invalid && nameControl.touched"
+          >
+            <input
+              type="text"
+              class="input"
+              placeholder="Ingresa tu nombre completo"
+              [formControl]="nameControl"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="nameControl.invalid && nameControl.touched"
+          >
+            {{ getErrorMessage('name') }}
+          </div>
+        </div>
+
+        <div class="pass-fields">
+          <div class="field">
+            <label>Contraseña</label>
+            <div
+              class="inputForm"
+              [class.error]="passwordControl.invalid && passwordControl.touched"
+            >
+              <input
+                type="password"
+                class="input"
+                placeholder="Ingresa una contraseña"
+                [formControl]="passwordControl"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="passwordControl.invalid && passwordControl.touched"
+            >
+              {{ getErrorMessage('password') }}
+            </div>
+          </div>
+          <div class="field">
+            <label>Confirmar contraseña</label>
+            <div
+              class="inputForm"
+              [class.error]="confirmPasswordControl.invalid && confirmPasswordControl.touched"
+            >
+              <input
+                type="password"
+                class="input"
+                placeholder="Confirma tu contraseña"
+                [formControl]="confirmPasswordControl"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="confirmPasswordControl.invalid && confirmPasswordControl.touched"
+            >
+              {{ getErrorMessage('confirmPassword') }}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Email</label>
+          <div
+            class="inputForm"
+            [class.error]="emailControl.invalid && emailControl.touched"
+          >
+            <input
+              type="email"
+              class="input"
+              placeholder="Ingresa tu email"
+              [formControl]="emailControl"
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="emailControl.invalid && emailControl.touched"
+          >
+            {{ getErrorMessage('email') }}
+          </div>
+        </div>
+
+        <button
+          class="button-submit"
+          type="submit"
+          [disabled]="!isFormValid()"
+        >
+          Crear cuenta
+        </button>
+      </form>
+    </div>
+    <div class="card-footer">
+      <span>¿Ya tienes una cuenta? </span>
+      <a [routerLink]="['/auth/login']">Iniciar Sesión</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+.card {
+  width: 680px;
+  height: auto;
+  background-color: var(--white);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.card-header {
+  height: auto;
+  background-color: #f2f3f4;
+  border-bottom: 1px solid #d5d8dc;
+  padding: 30px;
+
+  span {
+    color: #616a6b;
+    font-weight: 300;
+    font-size: larger;
+  }
+}
+
+.card-body {
+  margin: 20px;
+}
+
+.card-footer {
+  height: auto;
+  background-color: #f2f3f4;
+  border-top: 1px solid #d5d8dc;
+  padding: 30px;
+  text-align: center;
+
+  span, a {
+    color: var(--primary);
+    font-weight: 300;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px 30px 0 30px;
+}
+
+label {
+  color: #616a6b;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.inputForm {
+  border: 1px solid #d5d8dc;
+  border-radius: 5px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+  margin-top: 10px;
+}
+
+.input {
+  margin-left: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  color: #616a6b;
+  font-weight: 300;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.inputForm:focus-within {
+  border: 1.5px solid var(--primary);
+}
+
+.button-submit {
+  margin: 20px 0 10px 0;
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 5px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-submit:hover {
+  background-color: #095ccb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pass-fields {
+  display: flex;
+  gap: 20px;
+}
+
+.pass-fields .field {
+  flex: 1;
+}
+
+.error-message {
+  color: var(--error);
+  font-weight: 300;
+  padding-top: 10px;
+  font-size: small;
+}
+
+.inputForm.error {
+  border: 1px solid var(--error);
+}
+
+.button-submit:disabled {
+  background-color: var(--light-gray);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
