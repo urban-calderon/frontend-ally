@@ -1,25 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { UsersComponent } from './pages/users/users.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { UsersPageComponent } from './pages/users/users.component';
+import { HeaderComponent } from './layouts/header/header.component';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { CardComponent } from './components/card/card.component';
+import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { WeatherPageComponent } from './pages/weather/weather.component';
 
 
 @NgModule({
   declarations: [
     HomePageComponent,
-    UsersComponent,
+    UsersPageComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    CardComponent,
+    DashboardLayoutComponent,
+    WeatherPageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DashboardRoutingModule
   ],
-  exports: [
-    SidebarComponent,
-    HeaderComponent
-  ]
 })
 export class DashboardModule { }
