@@ -22,9 +22,6 @@ export class CountryService {
       try {
         const headers = this.authService.getAuthHeaders();
         return this.http.get<CountryResponse>(url, { headers }).pipe(
-          /* tap( (response: CountryResponse) => {
-            console.log(response.data);
-          }), */
           catchError(error => {
             if (error.status === 401) {
               this.authService.logout();
