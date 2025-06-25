@@ -1,0 +1,7 @@
+<ally-card [title]="titleAvailableTimeZones" [height]="'300px'">
+  <div *ngFor="let zone of timeZones" class="zones-list">
+    <div class="zone-item">
+      <span class="zone-name">{{ zone }}</span>
+    </div>
+  </div>
+</ally-card>
