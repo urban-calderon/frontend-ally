@@ -1,7 +1,10 @@
 <ally-card [title]="titleSelectedCountry" [height]="'220px'">
-  <div>
-    <span class="element">{{ weatherData?.country }}</span>
-    <span class="element">Capital: {{ weatherData?.name }}</span>
-    <span class="element">Latitud: {{ weatherData?.lat| number:'1.2-2' }} Longitud: {{ weatherData?.lon| number:'1.2-2' }}</span>
+  <div *ngIf="selectedCountry">
+    <span class="element">{{ selectedCountry.name }}</span>
+    <span class="element">Capital: {{ selectedCountry.city }}</span>
+    <span *ngIf="selectedCountry.lat" class="element">
+      Latitud: {{ selectedCountry.lat | number:'1.2-2' }}
+      Longitud: {{ selectedCountry.lon | number:'1.2-2' }}
+    </span>
   </div>
 </ally-card>

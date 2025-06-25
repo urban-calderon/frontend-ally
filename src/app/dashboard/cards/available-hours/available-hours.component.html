@@ -1,6 +1,6 @@
 <ally-card [title]="titleAvailableTimeZones" [height]="'300px'">
   <div *ngFor="let zone of timeZones" class="zones-list">
-    <div class="zone-item">
+    <div class="zone-item" (click)="selectTimeZone(zone)">
       <span class="zone-name">{{ zone }}</span>
     </div>
   </div>
