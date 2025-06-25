@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ally-login',
@@ -8,6 +10,10 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrl: './login.component.css'
 })
 export class LoginPageComponent {
+
+  private authService = inject(AuthService);
+  errorMessage        = signal<string | null>(null);
+  private router      = inject(Router);
 
   private validationConfig = {
     email: {
@@ -20,13 +26,13 @@ export class LoginPageComponent {
     }
   };
 
-  emailControl = new FormControl('', [
+  emailControl = new FormControl('jhon@email.com', [
     Validators.required,
     Validators.maxLength(this.validationConfig.email.maxLength),
     Validators.pattern(this.validationConfig.email.pattern),
   ]);
 
-  passwordControl = new FormControl('', [
+  passwordControl = new FormControl('passworD123', [
     Validators.required,
     Validators.minLength(this.validationConfig.password.minLength),
     Validators.maxLength(this.validationConfig.password.maxLength),
@@ -61,13 +67,30 @@ export class LoginPageComponent {
     return '';
   }
 
-  sendData(): void {
+  private getAuthErrorMessage(error: any): string {
+    if (error.includes('Email not exist')) {
+      return 'No existe una cuenta con este correo electrónico';
+    }
+    if (error.includes('Password invalid')) {
+      return 'Contraseña incorrecta';
+    }
+    return 'Error al iniciar sesión. Por favor intente nuevamente';
+  }
+
+  login() {
+    this.errorMessage.set(null);
+
     if (this.emailControl.valid && this.passwordControl.valid) {
-      console.log('Datos válidos:', {
-        email: this.emailControl.value,
-        password: this.passwordControl.value
+      this.authService.login(this.emailControl.value!, this.passwordControl.value!)
+      .subscribe({
+        next: () => this.router.navigateByUrl('/dashboard'),
+        error: (error) => {
+          this.errorMessage.set(this.getAuthErrorMessage(error));
+        }
       });
-      // TODO: enviar al servidor
+    } else {
+      this.errorMessage.set('Por favor complete el formulario correctamente');
     }
   }
+
 }

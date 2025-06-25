@@ -3,7 +3,7 @@
     <span>Login</span>
   </div>
   <div class="card-body">
-    <form class="form" (ngSubmit)="sendData()">
+    <form class="form" (ngSubmit)="login()">
       <div>
         <label>Email</label>
         <div
@@ -37,6 +37,10 @@
         <div class="error-message" *ngIf="passwordControl.invalid && passwordControl.touched">
           {{ getErrorMessage('password') }}
         </div>
+      </div>
+
+      <div class="error-message auth-error" *ngIf="errorMessage()">
+        {{ errorMessage() }}
       </div>
 
       <button
