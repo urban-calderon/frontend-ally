@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './pages/login/login.component';
 import { RegisterPageComponent } from './pages/register/register.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +19,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
   imports: [
     CommonModule,
     AuthRoutingModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule
   ]
