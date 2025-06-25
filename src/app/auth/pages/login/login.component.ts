@@ -15,6 +15,9 @@ export class LoginPageComponent {
   errorMessage        = signal<string | null>(null);
   private router      = inject(Router);
 
+  public loading: boolean = false;
+  public showPassword: boolean = false;
+
   private validationConfig = {
     email: {
       maxLength: 100,
@@ -37,6 +40,10 @@ export class LoginPageComponent {
     Validators.minLength(this.validationConfig.password.minLength),
     Validators.maxLength(this.validationConfig.password.maxLength),
   ]);
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   getErrorMessage(field: 'email' | 'password'): string {
 
@@ -79,16 +86,22 @@ export class LoginPageComponent {
 
   login() {
     this.errorMessage.set(null);
+    this.loading = true;
 
     if (this.emailControl.valid && this.passwordControl.valid) {
       this.authService.login(this.emailControl.value!, this.passwordControl.value!)
       .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard'),
+        next: () => {
+          this.loading = false;
+          this.router.navigateByUrl('/dashboard')
+        },
         error: (error) => {
+          this.loading = false;
           this.errorMessage.set(this.getAuthErrorMessage(error));
         }
       });
     } else {
+      this.loading = false;
       this.errorMessage.set('Por favor complete el formulario correctamente');
     }
   }

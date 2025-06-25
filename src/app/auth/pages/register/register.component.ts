@@ -16,6 +16,10 @@ export class RegisterPageComponent {
   errorMessage        = signal<string | null>(null);
   private router      = inject(Router);
 
+  public loading: boolean    = false;
+  public showPassword        = false;
+  public showConfirmPassword = false;
+
   private validationConfig = {
     name: {
       minLength: 3,
@@ -60,6 +64,14 @@ export class RegisterPageComponent {
       return null;
     }
   ]);
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   getErrorMessage(field: 'name' | 'email' | 'password' | 'confirmPassword'): string {
     const control = this.getControl(field);
@@ -145,14 +157,17 @@ export class RegisterPageComponent {
   }
 
   sendData() {
+    this.loading = true;
     if (this.isFormValid()) {
       this.authService.register(this.nameControl.value!, this.passwordControl.value!, this.emailControl.value!)
       .subscribe({
         next: () => {
+          this.loading = false;
           alert('¡Usuario registrado exitosamente, por favor inicia sesión!');
           this.router.navigateByUrl('/auth/login')
         },
         error: (error) => {
+          this.loading = false;
           this.errorMessage.set(this.getAuthErrorMessage(error));
         }
       })

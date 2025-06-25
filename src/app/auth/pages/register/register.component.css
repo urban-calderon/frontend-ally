@@ -59,6 +59,7 @@ label {
   padding-left: 10px;
   transition: 0.2s ease-in-out;
   margin-top: 10px;
+  position: relative;
 }
 
 .input {
@@ -133,4 +134,20 @@ label {
   border: 1px solid transparent;
   border-radius: 0.25rem;
   text-align: center;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #616a6b;
+  padding: 5px;
+}
+
+.toggle-password:focus {
+  outline: none;
 }
