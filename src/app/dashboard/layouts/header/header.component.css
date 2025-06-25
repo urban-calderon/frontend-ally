@@ -23,17 +23,23 @@
 .user-actions {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
+  color: var(--primary);
 }
 
 .user-name {
   color: var(--primary)
 }
 
-button {
+.logout-button {
   background-color: var(--white);
   color: var(--primary);
   border: none;
   align-items: center;
   display: flex;
+  cursor: pointer;
+}
+
+.logout-title {
+  margin-left: 5px;
 }

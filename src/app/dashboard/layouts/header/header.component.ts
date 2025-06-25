@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'ally-header',
@@ -8,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  private authService = inject(AuthService);
+
+  public user = computed(() => this.authService.currentUser());
+
+  onLogout() {
+    this.authService.logout();
+  }
 }
