@@ -1,24 +1,28 @@
 .card {
   width: 320px;
-  height: auto;
   background-color: var(--white);
   border-radius: 10px;
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .card-header {
-  height: auto;
   background-color: #e5e8e8;
   border-bottom: 1px solid #d5d8dc;
+}
 
-  p {
-    color: var(--primary);
-    padding: 18px 15px;
-    font-weight: 600;
-  }
+.card-header p {
+  color: var(--primary);
+  padding: 18px 15px;
+  font-weight: 600;
+  margin: 0;
 }
 
 .card-body {
-  margin: 20px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
 }
