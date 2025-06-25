@@ -1,0 +1,19 @@
+<ally-card [title]="titleTasks" [height]="'550px'">
+  <div class="stepper-box">
+    <div *ngFor="let task of tasks; let last = last"
+         [class.stepper-completed]="task.completed"
+         [class.stepper-pending]="!task.completed"
+         class="stepper-step">
+
+      <div class="stepper-circle"></div>
+      <div *ngIf="!last" class="stepper-line"></div>
+
+      <div class="stepper-content">
+        <div class="stepper-title">{{ task.text }}</div>
+        <div class="stepper-status">
+          {{ task.completed ? 'Completado' : 'Pendiente' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ally-card>
