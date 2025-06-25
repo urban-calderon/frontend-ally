@@ -3,4 +3,6 @@ export interface Country {
   code: string;
   name: string;
   city: string;
+  lat: number;
+  lon: number;
 }

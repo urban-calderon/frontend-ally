@@ -65,11 +65,11 @@
             </div>
           </div>
           <p class="description">{{ weatherData.weather[0].description | titlecase }}</p>
-          <p class="temperature">{{ weatherData.main.temp | number:'1.0-0' }}  °C</p>
+          <p class="temperature">{{ weatherData.main.temp - 273.15 | number:'1.0-0' }}  °C</p>
           <div class="temp-details">
             <div class="temps">
-              <span>Mín: {{ weatherData.main.temp_min | number:'1.0-0' }} °C</span>
-              <span>Máx: {{ weatherData.main.temp_max | number:'1.0-0' }} °C</span>
+              <span>Mín: {{ weatherData.main.temp_min - 273.15 | number:'1.0-0' }} °C</span>
+              <span>Máx: {{ weatherData.main.temp_max - 273.15 | number:'1.0-0' }} °C</span>
             </div>
             <div>
               <span>Humedad: {{ weatherData.main.humidity }} % </span>

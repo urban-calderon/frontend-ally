@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { TimeService } from '../../services/time.service';
 import { TimeZoneDetailResponse } from '../../interfaces';
+import { SharedStateService } from '../../services/index.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'ally-time',
@@ -13,11 +15,18 @@ export class TimeComponent {
   public titleTime: string = 'Hora';
   public currentTime: string = '';
   public timeZone: string = '';
-
   private timeService = inject(TimeService);
+  private sharedState = inject(SharedStateService);
 
   ngOnInit(): void {
-    this.loadTimeData('America/Mexico_City');
+    this.sharedState.selectedTimeZone$.pipe(
+      debounceTime(1000), // Espera 1 segundo entre cambios
+      distinctUntilChanged() // Solo actúa si la zona realmente cambió
+    ).subscribe(zone => {
+      if (zone) {
+        this.loadTimeData(zone);
+      }
+    });
   }
 
   loadTimeData(zoneName: string) {

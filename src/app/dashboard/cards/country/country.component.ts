@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CountryService } from '../../services/index.service';
 import { Country, CountryResponse } from '../../interfaces';
+import { SharedStateService } from '../../services/shared-state.service';
 
 @Component({
   selector: 'ally-country',
@@ -9,21 +10,25 @@ import { Country, CountryResponse } from '../../interfaces';
   styleUrl: './country.component.css'
 })
 export class CountryComponent {
-
   public titleAvailableCountry: string = 'Países disponibles';
-
   private countrieService = inject(CountryService);
+  private sharedState = inject(SharedStateService);
   public countries: Country[] = [];
+  public selectedCountry: Country | null = null;
 
   ngOnInit(): void {
     this.loadCountries();
+
+    this.sharedState.selectedCountry$.subscribe(country => {
+      this.selectedCountry = country;
+    });
   }
 
   loadCountries() {
     this.countrieService.getCountries().subscribe({
       next: (response: CountryResponse) => {
         this.countries = response.data;
-        //console.log('Paises:', this.countries);
+        this.highlightDefaultCountry();
       },
       error: (error) => {
         console.error('Error:', error);
@@ -32,10 +37,21 @@ export class CountryComponent {
   }
 
   selectCountry(country: Country) {
-    console.log('Hola mundo - País seleccionado:', country.name);
+    this.sharedState.setSelectedCountry(country);
   }
 
   getFlagImage(countryCode: string): string {
     return `/images/flags/${countryCode.toLowerCase()}.png`;
+  }
+
+  private highlightDefaultCountry() {
+    const mexico = this.countries.find(c => c.code === 'MX');
+    if (mexico) {
+      this.selectedCountry = mexico;
+    }
+  }
+
+  isSelected(country: Country): boolean {
+    return this.selectedCountry?.code === country.code;
   }
 }

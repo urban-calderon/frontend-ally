@@ -20,10 +20,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of paginatedUsers">
-        <td>{{ user.name }}</td>
+        <td>{{ user.fullName }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.createdAt }}</td>
-        <td>{{ user.lastLogin }}</td>
+        <td>{{ user.createdAt | date: 'medium' }}</td>
+        <td>{{ user.lastLoginAt ? (user.lastLoginAt | date: 'medium') : 'N/A'  }}</td>
       </tr>
       <tr *ngIf="paginatedUsers.length === 0">
         <td colspan="4">No se encontraron resultados.</td>

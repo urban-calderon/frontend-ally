@@ -11,4 +11,7 @@ export * from './time-zone-response.interface';
 export * from './time-zone.interface';
 export * from './time-response.iterface';
 
+export * from './users-response.interface';
+export * from './user.interface';
+
 

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { WeatherResponse } from '../../interfaces';
-import { WeatherService } from '../../services/index.service';
+import { SharedStateService, WeatherService } from '../../services/index.service';
 
 @Component({
   selector: 'ally-weather',
@@ -13,13 +13,18 @@ export class WeatherComponent {
   public titleWeather: string = 'Clima';
   public weatherData: WeatherResponse | null = null;
   private weatherService = inject(WeatherService);
+  private sharedState = inject(SharedStateService);
 
   ngOnInit(): void {
-    this.loadWeather();
+    this.sharedState.selectedCountry$.subscribe(country => {
+      if (country?.lat && country?.lon) {
+        this.loadWeather(country.lat, country.lon);
+      }
+    });
   }
 
-  loadWeather() {
-    this.weatherService.getWeather(19.43, -99.13).subscribe({
+  loadWeather(lat: number, lon: number) {
+    this.weatherService.getWeather(lat, lon).subscribe({
       next: (response: WeatherResponse) => {
         this.weatherData = response;
       },
@@ -27,17 +32,5 @@ export class WeatherComponent {
         console.error('Error:', error);
       }
     });
-  }
-
-  getTemperature(): number {
-    return this.weatherData?.main?.temp ?? 0;
-  }
-
-  getMinTemperature(): number {
-    return this.weatherData?.main?.temp_min ?? 0;
-  }
-
-  getMaxTemperature(): number {
-    return this.weatherData?.main?.temp_max ?? 0;
   }
 }
