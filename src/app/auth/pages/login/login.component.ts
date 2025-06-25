@@ -26,13 +26,13 @@ export class LoginPageComponent {
     }
   };
 
-  emailControl = new FormControl('jane@email.com', [
+  emailControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(this.validationConfig.email.maxLength),
     Validators.pattern(this.validationConfig.email.pattern),
   ]);
 
-  passwordControl = new FormControl('passworD123', [
+  passwordControl = new FormControl('', [
     Validators.required,
     Validators.minLength(this.validationConfig.password.minLength),
     Validators.maxLength(this.validationConfig.password.maxLength),
