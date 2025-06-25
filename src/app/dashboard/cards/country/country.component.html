@@ -1,0 +1,12 @@
+<ally-card [title]="titleAvailableCountry">
+  <div class="countries-list">
+    <div *ngFor="let country of countries"
+         class="country-item"
+         (click)="selectCountry(country)">
+      <img [src]="getFlagImage(country.code)"
+           [alt]="'Bandera de ' + country.name"
+           class="country-flag">
+      <span class="country-name">{{ country.name }}</span>
+    </div>
+  </div>
+</ally-card>
