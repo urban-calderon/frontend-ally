@@ -90,6 +90,10 @@
           </div>
         </div>
 
+        <div class="error-message auth-error" *ngIf="errorMessage()">
+          {{ errorMessage() }}
+        </div>
+
         <button
           class="button-submit"
           type="submit"
