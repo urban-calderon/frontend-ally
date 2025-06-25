@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ally-login',
@@ -9,6 +11,10 @@ import { FormControl, Validators } from '@angular/forms';
 })
 
 export class RegisterPageComponent {
+
+  private authService = inject(AuthService);
+  errorMessage        = signal<string | null>(null);
+  private router      = inject(Router);
 
   private validationConfig = {
     name: {
@@ -23,7 +29,6 @@ export class RegisterPageComponent {
     password: {
       minLength: 8,
       maxLength: 20,
-      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
     }
   };
 
@@ -44,7 +49,6 @@ export class RegisterPageComponent {
     Validators.required,
     Validators.minLength(this.validationConfig.password.minLength),
     Validators.maxLength(this.validationConfig.password.maxLength),
-    Validators.pattern(this.validationConfig.password.pattern),
   ]);
 
   confirmPasswordControl = new FormControl('', [
@@ -100,10 +104,6 @@ export class RegisterPageComponent {
           return `Máximo ${this.validationConfig.password.maxLength} caracteres`;
         }
 
-        if (control.hasError('pattern')) {
-          return 'La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales';
-        }
-
         break;
 
       case 'confirmPassword':
@@ -134,14 +134,28 @@ export class RegisterPageComponent {
            this.passwordControl.value === this.confirmPasswordControl.value;
   }
 
-  sendData(): void {
+  private getAuthErrorMessage(error: any): string {
+    if (error.includes('This email is already registered')) {
+      return 'Ya existe una cuenta con este correo electrónico';
+    }
+    if (error.includes('String must contain at least 8 character(s)')) {
+      return 'La contraseña debe ser minimo 8 caracteres';
+    }
+    return 'Error al registrar usuario. Por favor intente nuevamente';
+  }
+
+  sendData() {
     if (this.isFormValid()) {
-      console.log('Datos válidos:', {
-        name: this.nameControl.value,
-        email: this.emailControl.value,
-        password: this.passwordControl.value
-      });
-      // TODO: Enviar al servidor
+      this.authService.register(this.nameControl.value!, this.passwordControl.value!, this.emailControl.value!)
+      .subscribe({
+        next: () => {
+          alert('¡Usuario registrado exitosamente, por favor inicia sesión!');
+          this.router.navigateByUrl('/auth/login')
+        },
+        error: (error) => {
+          this.errorMessage.set(this.getAuthErrorMessage(error));
+        }
+      })
     }
   }
 }

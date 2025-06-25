@@ -3,7 +3,7 @@ import { catchError, map, Observable, tap, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment.development';
-import { AuthStatus, User, Data, LoginResponse } from '../interfaces';
+import { AuthStatus, User, Data, LoginResponse, RegisterResponse } from '../interfaces';
 
 
 @Injectable({
@@ -24,9 +24,18 @@ export class AuthService {
     this.checkAuthStatus().subscribe();
   }
 
+  register(name: string, password: string, email: string): Observable<RegisterResponse> {
+    const url = `${ this.baseUrl }/api/auth/register`;
+    const body = { name, email, password };
+
+    return this.http.post<RegisterResponse>(url, body).pipe(
+      catchError(err => throwError(() => err.error.message || 'Error en el servidor'))
+    )
+  }
+
   login( email:string, password: string): Observable<boolean> {
 
-    const url = `${ this.baseUrl }/api/users/login`;
+    const url = `${ this.baseUrl }/api/auth/login`;
     const body = { email, password };
 
     return this.http.post<LoginResponse>(url, body)

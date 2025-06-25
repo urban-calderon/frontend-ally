@@ -26,7 +26,7 @@ export class LoginPageComponent {
     }
   };
 
-  emailControl = new FormControl('jhon@email.com', [
+  emailControl = new FormControl('jane@email.com', [
     Validators.required,
     Validators.maxLength(this.validationConfig.email.maxLength),
     Validators.pattern(this.validationConfig.email.pattern),
