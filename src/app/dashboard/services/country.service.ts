@@ -1,0 +1,40 @@
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../auth/services/auth.service';
+import { Observable, catchError, tap, throwError } from 'rxjs';
+import { CountryResponse } from '../interfaces';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CountryService {
+
+  private readonly baseUrl: string = environment.API_URL_BACKEND;
+  private http                     = inject(HttpClient);
+  private authService              = inject(AuthService);
+
+  constructor() { }
+
+  getCountries(): Observable<CountryResponse> {
+      const url = `${this.baseUrl}/api/countries`;
+
+      try {
+        const headers = this.authService.getAuthHeaders();
+        return this.http.get<CountryResponse>(url, { headers }).pipe(
+          /* tap( (response: CountryResponse) => {
+            console.log(response.data);
+          }), */
+          catchError(error => {
+            if (error.status === 401) {
+              this.authService.logout();
+            }
+            return throwError(() => error.error.message || 'Error al obtener las tareas');
+          })
+        );
+      } catch (error) {
+        this.authService.logout();
+        return throwError(() => 'Sesión expirada, por favor vuelve a iniciar sesión');
+      }
+    }
+}
