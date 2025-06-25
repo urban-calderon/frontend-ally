@@ -1,1 +1,44 @@
-<p>users works!</p>
+<div class="table-container">
+  <p class="title-table">Usuarios</p>
+
+  <input
+    type="text"
+    placeholder="Buscar por nombre o email..."
+    [(ngModel)]="filterText"
+    (input)="onFilterChange()"
+    class="filter-input"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Fecha de registro</th>
+        <th>Último login</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.createdAt }}</td>
+        <td>{{ user.lastLogin }}</td>
+      </tr>
+      <tr *ngIf="paginatedUsers.length === 0">
+        <td colspan="4">No se encontraron resultados.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
+    <button *ngFor="let page of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === i + 1"
+            (click)="changePage(i + 1)">
+      {{ i + 1 }}
+    </button>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">&raquo;</button>
+  </div>
+</div>
+
