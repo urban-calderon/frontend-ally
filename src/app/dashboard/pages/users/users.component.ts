@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { User } from '../../../auth/interfaces';
+import { Component, inject } from '@angular/core';
+import { UsersResponse, User } from '../../interfaces';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'ally-users',
@@ -9,26 +10,20 @@ import { User } from '../../../auth/interfaces';
 })
 export class UsersPageComponent {
 
-  users: User[] = [
-    { id: 1, name: 'James Butt', email: 'jbutt@email.com', createdAt: '2015-09-12', lastLogin: '2023-12-20' },
-    { id: 1, name: 'Josephine Darakjy', email: 'jdarakjy@email.com', createdAt: '2019-02-08', lastLogin: '2024-01-05' },
-    { id: 1, name: 'Art Venere', email: 'av@email.com', createdAt: '2017-05-12', lastLogin: '2024-11-11' },
-    { id: 1, name: 'Lenna Paprocki', email: 'lp@email.com', createdAt: '2020-09-14', lastLogin: '2025-01-01' },
-    { id: 1, name: 'Donette Foller', email: 'dfoller@email.com', createdAt: '2016-05-19', lastLogin: '2024-12-01' },
-    { id: 1, name: 'Simona Morasca', email: 'smorasca@email.com', createdAt: '2018-02-15', lastLogin: '2025-06-01' },
-    { id: 1, name: 'Mitsue Tollner', email: 'mt@email.com', createdAt: '2018-02-18', lastLogin: '2025-06-20' },
-    { id: 1, name: 'Leota Dilliard', email: 'ld@email.com', createdAt: '2019-08-12', lastLogin: '2025-06-18' },
-    { id: 1, name: 'Sage Wieser', email: 'sw@email.com', createdAt: '2018-11-20', lastLogin: '2025-05-30' },
-    { id: 1, name: 'Kris Marrier', email: 'km@email.com', createdAt: '2015-07-06', lastLogin: '2024-12-10' }
-  ];
+  public users: User[] = [];
+  private usersService = inject(UserService);
 
-  public filterText = '';
-  public currentPage = 1;
+  public filterText   = '';
+  public currentPage  = 1;
   public itemsPerPage = 5;
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
 
   get filteredUsers(): User[] {
     return this.users.filter(user =>
-      user.name.toLowerCase().includes(this.filterText.toLowerCase()) ||
+      user.fullName.toLowerCase().includes(this.filterText.toLowerCase()) ||
       user.email.toLowerCase().includes(this.filterText.toLowerCase())
     );
   }
@@ -49,6 +44,18 @@ export class UsersPageComponent {
   }
 
   onFilterChange(): void {
-    this.currentPage = 1; // Reset to first page when filter changes
+    this.currentPage = 1;
+  }
+
+  loadUsers() {
+    this.usersService.getUsers().subscribe({
+      next: (response: UsersResponse) => {
+        const data = response.users;
+        this.users = data
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    })
   }
 }
