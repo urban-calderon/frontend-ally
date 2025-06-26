@@ -1,5 +1,5 @@
 export const environment = {
-  API_URL_BACKEND: 'https://backend-ally.onrender.com',
+  API_URL_BACKEND: 'https://backend-ally-production.up.railway.app',
   API_URL_WEATHER: 'https://api.openweathermap.org',
   API_URL_TIME_ZONE: 'https://api.timezonedb.com',
 
